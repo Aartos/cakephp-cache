@@ -101,7 +101,15 @@ class CacheComponent extends Component {
 			$cache = $prefix . '_' . $url;
 		}
 		if ($url !== '_root') {
-			$cache = Inflector::slug($cache);
+			$slugger = Configure::read('Cache.slugger');
+			switch ($slugger) {
+				case 'md5':
+					$cache = md5($cache);
+					break;
+				default:
+					$cache = Inflector::slug($cache);
+				break;
+			}
 		}
 		if (empty($cache)) {
 			return false;

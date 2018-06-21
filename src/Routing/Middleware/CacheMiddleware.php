@@ -106,7 +106,15 @@ class CacheMiddleware {
 		}
 
 		if ($url !== '_root') {
-			$path = Inflector::slug($path);
+			$slugger = Configure::read('Cache.slugger');
+			switch ($slugger) {
+				case 'md5':
+					$path = md5($path);
+					break;
+				default:
+					$path = Inflector::slug($path);
+					break;
+			}
 		}
 
 		$folder = CACHE . 'views' . DS;

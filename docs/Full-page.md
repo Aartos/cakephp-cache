@@ -70,6 +70,9 @@ The `CACHE` constant can be adjusted in your bootstrap and defaults to `tmp/cach
 
 If you need a prefix in order to allow multiple (sub)domains to deliver content in multiple languages for example, use
  `Configure::write('Cache.prefix', 'myprefix')` to separate them.
+ 
+If you want cache files to be named by md5 instead of the inflector, use
+ `Configure::write('Cache.slugger', 'md5')`. This can prevent cache files from breaking over large file names that may be caused by query strings.
 
 ### Component Configuration
 If you only want certain actions to be cached, provide them as `actions` array.

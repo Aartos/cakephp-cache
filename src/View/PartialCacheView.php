@@ -106,7 +106,17 @@ class PartialCacheView extends AppView {
 			mkdir($cacheFolder, 0770, true);
 		}
 
-		$cacheFile = $cacheFolder . Inflector::slug($path);
+		$slugger = Configure::read('Cache.slugger');
+		switch ($slugger) {
+			case 'md5':
+				$path = md5($path);
+				break;
+			default:
+				$path = Inflector::slug($path);
+				break;
+		}
+
+		$cacheFile = $cacheFolder . $path;
 
 		if (file_exists($cacheFile)) {
 			$cacheContent = $this->extractCacheContent($cacheFile);
